@@ -1,0 +1,21 @@
+name: Deploy Irish Visa Tracker to EC2
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # allows manual trigger from the Actions tab
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH into EC2 and rebuild container
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/nsca1networks
+            git pull origin main
+            docker compose up --build -d
