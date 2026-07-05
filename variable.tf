@@ -40,3 +40,8 @@ variable "allowed_ssh_cidr" {
   type        = string
   default     = "0.0.0.0/0" 
 }
+variable "key_pair_name" {
+  description = "Name for the AWS key pair created from your local public key"
+  type        = string
+  default     = "nsca1networks-key"
+}

@@ -108,13 +108,17 @@ resource "aws_security_group" "app_sg" {
 }
 
 # --- EC2 Instance ---
+resource "aws_key_pair" "this" {
+  key_name   = var.key_pair_name
+  public_key = file(var.public_key_path)
+}
+
 resource "aws_instance" "app_server" {
   ami                    = var.ami_id
   instance_type          = var.instance_type
   subnet_id              = aws_subnet.public.id
   vpc_security_group_ids = [aws_security_group.app_sg.id]
-  key_name               = "Networkca"
-
+  key_name               = aws_key_pair.this.key_name
   tags = {
     Name    = "server"
 

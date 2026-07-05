@@ -1,0 +1,51 @@
+---
+- hosts: web
+  become: yes
+
+  vars:
+    repo_url: "https://github.com/nithyanands/nsca1networks.git"
+    repo_dest: "/home/ubuntu/nsca1networks"
+
+  tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Install git (needed to clone the app repo)
+      apt:
+        name: git
+        state: present
+
+    - name: Install Docker Compose v2 plugin (provides the `docker compose` command)
+      apt:
+        name: docker-compose-v2
+        state: present
+
+    - name: Enable and start Docker on boot
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Add ubuntu user to docker group
+      user:
+        name: ubuntu
+        groups: docker
+        append: yes
+
+    - name: Clone the application repo (safe to re-run, no-op if already present)
+      git:
+        repo: "{{ repo_url }}"
+        dest: "{{ repo_dest }}"
+        version: main
+        force: no
+
+    - name: Build and start the app container for the first time
+      command: docker compose up --build -d
+      args:
+        chdir: "{{ repo_dest }}"
