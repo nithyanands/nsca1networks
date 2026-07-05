@@ -1,0 +1,7 @@
+*.pem
+host_file.ini
+.terraform/
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+.streamlit/secrets.toml
