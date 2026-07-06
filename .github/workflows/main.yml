@@ -1,0 +1,17 @@
+name: Application Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run Ansible Playbook
+        run: ansible-playbook -i host_file.ini docker1.yaml
