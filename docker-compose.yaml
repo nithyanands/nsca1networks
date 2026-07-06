@@ -3,5 +3,6 @@ services:
     build: .
     container_name: visa-tracker
     tty: true
+    restart: always
     ports:
       - 8501:8501
