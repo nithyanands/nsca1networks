@@ -44,6 +44,12 @@
         dest: "{{ repo_dest }}"
         version: main
         force: no
+    - name: Ensure ubuntu user owns the cloned repo (so git pull works without sudo)
+      file:
+        path: "{{ repo_dest }}"
+        owner: ubuntu
+        group: ubuntu
+        recurse: yes
 
     - name: Build and start the app container for the first time
       command: docker compose up --build -d
