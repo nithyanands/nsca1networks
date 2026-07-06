@@ -17,4 +17,4 @@ jobs:
         run: chmod 400 Networkca.pem
 
       - name: Run Ansible Playbook
-        run: ansible-playbook -i host_file.ini docker.yaml
+        run: ansible-playbook -i host_file.ini remote-clone.yaml
