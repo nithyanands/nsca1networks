@@ -14,4 +14,4 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Ansible Playbook
-        run: ansible-playbook -i host_file.ini docker1.yaml
+        run: ansible-playbook -i host_file.ini docker.yaml
