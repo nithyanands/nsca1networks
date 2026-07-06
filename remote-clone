@@ -1,0 +1,12 @@
+- name: Clone or update repository
+  git:
+    repo: https://github.com/username/repository.git
+    dest: /home/ubuntu/app
+    version: main
+    update: yes
+- name: Run Docker Compose
+  become: yes
+  become_user: ubuntu
+  command: docker compose up -d --build
+  args:
+    chdir: /home/ubuntu/app
